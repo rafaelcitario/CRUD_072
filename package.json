@@ -4,7 +4,7 @@
   "description": "Teste pratico de desenvolvimento web para empresa pixit. CRUD de usuários e eventos com autenticação JWT e confirmação via e-mail",
   "main": "index.js",
   "scripts": {
-    "seed": "ts-node -r tsconfig-paths/register mysql-init/seed.ts",
+    "seed": "npx ts-node -r tsconfig-paths/register mysql-init/seed.ts",
     "build": "npm run seed && tsc ./",
     "start": "npm run build && node ./dist/src/server.js",
     "start:dev": "nodemon -r tsconfig-paths/register src/server.ts",
