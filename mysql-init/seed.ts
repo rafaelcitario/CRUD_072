@@ -1,7 +1,7 @@
 import { _env } from '@src/env';
 import { generateBinaryID } from '@src/util/generate_binaryId';
 import { createHash } from 'crypto';
-import { createConnection, QueryError } from 'mysql2/promise';
+import { createConnection } from 'mysql2/promise';
 
 ( async function () {
     const cnn = await createConnection( {
