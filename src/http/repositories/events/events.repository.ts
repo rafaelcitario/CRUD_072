@@ -1,7 +1,5 @@
 import { databaseConnection } from '@src/database';
 import { generateBinaryID } from '@src/util/generate_binaryId';
-import { ResultSetHeader } from 'mysql2';
-
 export class EventRepository {
     static async create ( data: { title: string, date: string, email: string; userId: string; } ): Promise<void> {
         const { title, date, userId } = data;
@@ -33,7 +31,7 @@ export class EventRepository {
     }
 
     static async list ( data: { email: string; userId: string; } ) {
-        const { email, userId } = data;
+        const { email } = data;
         const database = await databaseConnection();
 
         try {

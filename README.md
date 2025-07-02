@@ -13,13 +13,72 @@ Este projeto implementa um sistema backend com autenticação JWT, gerenciamento
 
 ```bash
 .
-├── README.md               # Documentação principal
-├── compose.yml             # Configuração Docker
-├── mysql-init/
-│   └── schema.sql          # Esquema do banco de dados
-├── package.json            # Dependências e scripts
-├── package-lock.json       # Versões exatas das dependências
-└── tsconfig.json           # Configuração TypeScript
+├── README.md
+├── compose.yml
+├── dist
+│   ├── mysql-init
+│   │   └── seed.js
+│   └── src
+│       ├── env
+│       │   └── index.js
+│       ├── server.js
+│       └── util
+│           └── generate_binaryId.js
+├── eslint.config.mjs
+├── mysql-init
+│   ├── schema.sql
+│   └── seed.ts
+├── package-lock.json
+├── package.json
+├── src
+│   ├── @types
+│   │   └── express
+│   │       └── index.d.ts
+│   ├── app
+│   │   └── app.ts
+│   ├── database
+│   │   └── index.ts
+│   ├── env
+│   │   └── index.ts
+│   ├── http
+│   │   ├── controllers
+│   │   │   ├── auth
+│   │   │   │   └── auth.controller.ts
+│   │   │   └── events
+│   │   │       └── events.controller.ts
+│   │   ├── middlewares
+│   │   │   ├── email.middleware.ts
+│   │   │   ├── registerPayload.middleware.ts
+│   │   │   └── verifyEmail.middleware.ts
+│   │   ├── repositories
+│   │   │   ├── auth
+│   │   │   │   └── auth.repository.ts
+│   │   │   └── events
+│   │   │       └── events.repository.ts
+│   │   ├── routes
+│   │   │   ├── auth
+│   │   │   │   └── auth.routes.ts
+│   │   │   ├── events
+│   │   │   │   └── events.routes.ts
+│   │   │   └── router.routes.ts
+│   │   └── services
+│   │       ├── auth
+│   │       │   └── auth.service.ts
+│   │       └── events
+│   │           └── events.service.ts
+│   ├── server.ts
+│   └── util
+│       ├── email
+│       │   └── send.email.ts
+│       ├── generate_binaryId.ts
+│       ├── tokens
+│       │   ├── createToken.jwt.ts
+│       │   └── validateToken.jwt.ts
+│       └── validators
+│           ├── email.validator.ts
+│           └── password.validator.ts
+├── tsconfig.json
+└── view
 ```
 
 ## Requisitos do Sistema

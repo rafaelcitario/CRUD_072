@@ -1,11 +1,11 @@
 import { EventsController } from '@src/http/controllers/events/events.controller';
-import { verifyEmailMiddleware } from '@src/http/middlewares/verifyEmail.middleware';
+import { tokenMiddlewareVerification } from '@src/http/middlewares/tokenVerification.middleware';
 import { Router } from 'express';
 
 export const eventRoutes = Router();
 
-eventRoutes.post( '/new', verifyEmailMiddleware, EventsController.create );
-eventRoutes.get( '/all', verifyEmailMiddleware, EventsController.list );
-eventRoutes.get( '/{:id}', verifyEmailMiddleware, EventsController.findOne );
-eventRoutes.put( '/{:id}', verifyEmailMiddleware, EventsController.update );
-eventRoutes.delete( '/{:id}', verifyEmailMiddleware, EventsController.delete );
+eventRoutes.post( '/new', tokenMiddlewareVerification, EventsController.create );
+eventRoutes.get( '/all', tokenMiddlewareVerification, EventsController.list );
+eventRoutes.get( '/{:id}', tokenMiddlewareVerification, EventsController.findOne );
+eventRoutes.put( '/{:id}', tokenMiddlewareVerification, EventsController.update );
+eventRoutes.delete( '/{:id}', tokenMiddlewareVerification, EventsController.delete );
