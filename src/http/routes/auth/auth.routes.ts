@@ -7,6 +7,6 @@ export const authRoutes = Router();
 
 authRoutes.post( '/login', emailMiddleware, AuthController.login );
 
-authRoutes.get( '/register', isValidRegisterPayload, AuthController.register );
+authRoutes.post( '/register', isValidRegisterPayload, AuthController.register );
 
 authRoutes.get( '/verify_email', AuthController.verifyEmail );

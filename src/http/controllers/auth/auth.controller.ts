@@ -18,18 +18,19 @@ export class AuthController {
         }
     };
 
-    static register ( req: Request<unknown, unknown, { email: string, password: string; }>, res: Response ) {
+    static async register ( req: Request<unknown, unknown, { email: string, password: string; }>, res: Response ) {
         const { email, password } = req.body;
         try {
-            // await AuthServices.login( { email, password } );
-            // res.status( 200 ).send( 'Login was a successfuly' );
+            const tokens = await AuthServices.register( { email, password } );
+            const code = 200;
+            res.status( 200 ).json( { code, status: 'Register successfuly', tokens } );
         } catch ( e ) {
-            // if ( e instanceof Error && e.message === 'Invalid credentials' ) {
-            //     res.status( 400 ).json( { error: "Invalid email or password" } );
-            //     return;
-            // }
-            // res.status( 500 ).json( { error: 'Internal server error' } );
-            // return;
+            if ( e instanceof Error && e.message === 'Invalid credentials' ) {
+                res.status( 400 ).json( { error: "Invalid email or password" } );
+                return;
+            }
+            res.status( 500 ).json( { error: 'Internal server error' } );
+            return;
         }
     }
 

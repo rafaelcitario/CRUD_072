@@ -1,13 +1,14 @@
 import { databaseConnection } from '@src/database';
-import { RowDataPacket } from 'mysql2/promise';
+import { generateBinaryID } from '@src/util/generate_binaryId';
+import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 
-interface User extends RowDataPacket {
+interface User extends ResultSetHeader {
     id: Uint8Array,
     email: string,
     is_valid_email: number;
 }
 export class AuthRepository {
-    static async login ( data: { email: string; password: string; } ): Promise<User[] | []> {
+    static async userLogin ( data: { email: string; password: string; } ): Promise<User[] | []> {
         const { email, password } = data;
         const database = await databaseConnection();
 
@@ -27,8 +28,33 @@ export class AuthRepository {
         }
     }
 
-    static async createRegister ( data: { email: string; password: string; } ): Promise<void> {
-        // Implementar
+    static async userRegister ( data: { email: string; password: string; } ): Promise<User[] | []> {
+        const { email, password } = data;
+        const database = await databaseConnection();
+        try {
+            database.beginTransaction();
+            let sql = `
+            INSERT
+            INTO users
+            (id, email, password_hash)
+            VALUES (?, ?, ?)`;
+            const userId: Uint8Array = generateBinaryID();
+            await database.execute( sql, [userId, email, password] );
+            await database.commit();
+
+            sql = `
+            SELECT id, email, is_valid_email
+            FROM users
+            WHERE email = ? AND password_hash = ? AND is_valid_email = 0
+            `;
+            const [user] = await database.query<User[]>( sql, [email, password, 1] );
+            return user;
+        } catch ( e ) {
+            await database.rollback();
+            throw new Error( `Error: ${e instanceof Error ? e.message : 'undefined Error at database connection'}` );
+        } finally {
+            await database.end();
+        }
     }
 
     static async sendEmailToVerify ( data: { email: string; } ): Promise<void> {
