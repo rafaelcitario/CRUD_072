@@ -1,6 +1,6 @@
 import { databaseConnection } from '@src/database';
 import { generateBinaryID } from '@src/util/generate_binaryId';
-import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
+import { ResultSetHeader } from 'mysql2/promise';
 
 interface User extends ResultSetHeader {
     id: Uint8Array,

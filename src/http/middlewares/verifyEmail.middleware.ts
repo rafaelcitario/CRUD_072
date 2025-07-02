@@ -13,7 +13,7 @@ export async function verifyEmailMiddleware ( req: Request, res: Response, next:
         const { email, userId } = await validateToken( token );
         req.user = { email, userId };
         next();
-    } catch ( e ) {
+    } catch {
         res.status( 401 ).json( { error: 'Invalid token or expired' } );
         return;
     }
