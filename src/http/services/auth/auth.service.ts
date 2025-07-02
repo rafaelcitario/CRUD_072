@@ -1,5 +1,7 @@
 import { AuthRepository } from '@src/http/repositories/auth/auth.repository';
+import { sendEmailVerification } from '@src/util/email/send.email';
 import { implementJWTToken } from '@src/util/tokens/createToken.jwt';
+import { validateToken } from '@src/util/tokens/validateToken.jwt';
 import { isValidEmail } from '@src/util/validators/email.validator';
 import { isValidPassword } from '@src/util/validators/password.validator';
 import { createHash } from 'crypto';
@@ -36,7 +38,7 @@ export class AuthServices {
         return { token, refresh_token };
     };
 
-    static async register ( data: { email: string; password: string; } ): Promise<JWTReturnTokens> {
+    static async register ( data: { email: string; password: string; } ): Promise<{ verificationLink: string; } & JWTReturnTokens> {
         const { email, password } = data;
         if ( !isValidEmail( email ) || !isValidPassword( password ) ) {
             throw new Error( 'Invalid credentials' );
@@ -56,7 +58,19 @@ export class AuthServices {
 
         const token = implementJWTToken( { userId: stringify( user.id as Buffer ), email: user.email }, 'token' );
         const refresh_token = implementJWTToken( { userId: stringify( user.id as Buffer ), email: user.email }, 'rf_token' );
-        return { token, refresh_token };
+
+
+        const link = `http://localhost:3000/auth/verify_email?token=${token}`;
+
+        const verificationLink = await sendEmailVerification( { email, link } );
+        return { token, refresh_token, verificationLink };
     }
-    static async sendEmailVerification ( data: { email: string; password: string; } ): Promise<void> { }
+    static async validateAccount ( token: string ): Promise<void> {
+        const { userId, email } = await validateToken( token );
+        if ( !userId || !email ) {
+            throw new Error( 'Invalid token' );
+        }
+        await AuthRepository.validateEmailAccount( { userId, email } );
+        return;
+    }
 }

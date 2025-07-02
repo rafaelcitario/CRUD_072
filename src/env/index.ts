@@ -10,7 +10,8 @@ const envSchema = z.object( {
     JWT_SECRET_TOKEN: z.string(),
     JWT_SECRET_RF_TOKEN: z.string(),
     JWT_LIFETIME_TOKEN: z.coerce.number().default( 900 ),
-    JWT_LIFETIME_RF_TOKEN: z.coerce.number().default( 604800 )
+    JWT_LIFETIME_RF_TOKEN: z.coerce.number().default( 604800 ),
+    SMTP_PASSWRD: z.string()
 } );
 
 

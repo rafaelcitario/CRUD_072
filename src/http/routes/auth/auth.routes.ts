@@ -6,7 +6,5 @@ import { Router } from 'express';
 export const authRoutes = Router();
 
 authRoutes.post( '/login', emailMiddleware, AuthController.login );
-
 authRoutes.post( '/register', isValidRegisterPayload, AuthController.register );
-
-authRoutes.get( '/verify_email', AuthController.verifyEmail );
+authRoutes.get( '/verify_email{:token}', AuthController.verifyEmail );

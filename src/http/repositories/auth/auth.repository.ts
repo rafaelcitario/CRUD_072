@@ -57,7 +57,24 @@ export class AuthRepository {
         }
     }
 
-    static async sendEmailToVerify ( data: { email: string; } ): Promise<void> {
-        // Implementar
+    static async validateEmailAccount ( data: { userId: string, email: string; } ): Promise<void> {
+        const { userId, email } = data;
+        const database = await databaseConnection();
+        try {
+            await database.beginTransaction();
+            const sql = `
+            UPDATE users
+            SET is_valid_email = 1
+            WHERE id = UNHEX(?) AND email = (?)
+            `;
+            await database.query<User[]>( sql, [userId.replaceAll( '-', '' ), email] );
+            await database.commit();
+            return;
+        } catch ( e ) {
+            await database.rollback();
+            throw new Error( `Error: ${e instanceof Error ? e.message : 'undefined Error at database connection'}` );
+        } finally {
+            await database.end();
+        }
     }
 }
