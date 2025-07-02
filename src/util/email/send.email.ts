@@ -17,7 +17,7 @@ export function sendEmailVerification ( data: { link: string, email: string; } )
         const info = await transporter.sendMail( {
             from: myEmail,
             to: email,
-            subject: "Confirme seu cadastro na Pixit",
+            subject: 'Confirme seu cadastro na Pixit',
 
             text: `
 Olá,

@@ -10,7 +10,7 @@ export class AuthController {
             res.status( code ).json( { code, status: 'Login successfuly', tokens } );
         } catch ( e ) {
             if ( e instanceof Error && e.message === 'Invalid credentials' ) {
-                res.status( 400 ).json( { error: "Invalid email or password" } );
+                res.status( 400 ).json( { error: 'Invalid email or password' } );
                 return;
             }
             res.status( 500 ).json( { error: 'Internal server error' } );
@@ -26,7 +26,7 @@ export class AuthController {
             res.status( code ).json( { code, status: 'Register successfuly', tokens } );
         } catch ( e ) {
             if ( e instanceof Error && e.message === 'Invalid credentials' ) {
-                res.status( 400 ).json( { error: "Invalid email or password" } );
+                res.status( 400 ).json( { error: 'Invalid email or password' } );
                 return;
             }
             res.status( 500 ).json( { error: 'Internal server error' } );
@@ -42,7 +42,7 @@ export class AuthController {
             res.status( 200 ).json( { code, status: 'Validation successfuly', tokens } );
         } catch ( e ) {
             if ( e instanceof Error && e.message === 'Invalid token' ) {
-                res.status( 400 ).json( { error: "Invalid token or expired" } );
+                res.status( 400 ).json( { error: 'Invalid token or expired' } );
                 return;
             }
             res.status( 500 ).json( { error: 'Internal server error' } );

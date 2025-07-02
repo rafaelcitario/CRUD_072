@@ -54,7 +54,7 @@ export class EventRepository {
     }
 
     static async find ( data: { eventId: string; email: string; userId: string; } ) {
-        const { eventId, email, userId } = data;
+        const { email } = data;
         const database = await databaseConnection();
 
         try {
@@ -78,7 +78,7 @@ export class EventRepository {
 
     static async update ( data: { eventId: string; email: string; userId: string; title: string; date: string; } ):
         Promise<{ date?: string | undefined; title?: string | undefined; id: string; }> {
-        const { eventId, email, userId, title, date } = data;
+        const { eventId, title, date } = data;
         const database = await databaseConnection();
         try {
             await database.beginTransaction();
@@ -93,11 +93,11 @@ export class EventRepository {
             await database.commit();
 
             if ( 'affectedRows' in result && result.affectedRows === 0 ) {
-                throw new Error( "Event not found or nothing was updated." );
+                throw new Error( 'Event not found or nothing was updated.' );
             }
 
             if ( !date || !title || !eventId ) {
-                throw new Error( "Event not found or nothing was updated." );
+                throw new Error( 'Event not found or nothing was updated.' );
             }
             return {
                 id: eventId,
@@ -113,7 +113,7 @@ export class EventRepository {
     }
 
     static async delete ( data: { eventId: string; email: string; userId: string; } ): Promise<boolean> {
-        const { eventId, email, userId } = data;
+        const { eventId, userId } = data;
         const database = await databaseConnection();
 
         try {

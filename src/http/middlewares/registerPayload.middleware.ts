@@ -6,7 +6,7 @@ export function isValidRegisterPayload ( req: Request<unknown, unknown, { email:
     const { email, password } = req.body;
     if ( !isValidPassword( password ) ) {
         res.status( 400 ).json( {
-            error: "Invalid password format"
+            error: 'Invalid password format'
         } );
         return;
     }

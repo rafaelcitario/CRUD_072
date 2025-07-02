@@ -10,11 +10,11 @@ export class EventService {
         const { title, date, email, userId } = data;
 
         if ( title.trim().length < 1 ) {
-            throw new Error( "The event title is required." );
+            throw new Error( 'The event title is required.' );
         }
 
         if ( new Date( date ) <= new Date() ) {
-            throw new Error( "The event date must be in the future." );
+            throw new Error( 'The event date must be in the future.' );
         }
 
         const createdEvent = await EventRepository.create( { title, date, email, userId } );
@@ -32,7 +32,7 @@ export class EventService {
         const event = await EventRepository.find( { eventId, email, userId } );
 
         if ( !event ) {
-            throw new Error( "Event not found." );
+            throw new Error( 'Event not found.' );
         }
 
         return event;
@@ -49,15 +49,15 @@ export class EventService {
 
         const event = await EventRepository.find( { eventId, email, userId } );
         if ( !event ) {
-            throw new Error( "Event not found." );
+            throw new Error( 'Event not found.' );
         }
 
         if ( title && title.trim().length < 1 ) {
-            throw new Error( "The title cannot be empty." );
+            throw new Error( 'The title cannot be empty.' );
         }
 
         if ( date && new Date( date ) <= new Date() ) {
-            throw new Error( "The new event date must be in the future." );
+            throw new Error( 'The new event date must be in the future.' );
         }
 
         const updatedEvent = await EventRepository.update( {
@@ -76,9 +76,9 @@ export class EventService {
         const deleted = await EventRepository.delete( { eventId, email, userId } );
 
         if ( !deleted ) {
-            throw new Error( "Event not found." );
+            throw new Error( 'Event not found.' );
         }
 
-        return { message: "Event deleted successfully." };
+        return { message: 'Event deleted successfully.' };
     }
 }

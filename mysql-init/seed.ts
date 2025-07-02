@@ -13,11 +13,11 @@ import { createConnection } from 'mysql2/promise';
 
 
     const users = [
-        { email: "seed01@email.com.br", password: "user_pass_hash01" },
-        { email: "seed02@email.com.br", password: "user_pass_hash02" },
-        { email: "seed03@email.com.br", password: "user_pass_hash03" },
-        { email: "seed04@email.com.br", password: "user_pass_hash04" },
-        { email: "seed05@email.com.br", password: "user_pass_hash05" },
+        { email: 'seed01@email.com.br', password: 'user_pass_hash01' },
+        { email: 'seed02@email.com.br', password: 'user_pass_hash02' },
+        { email: 'seed03@email.com.br', password: 'user_pass_hash03' },
+        { email: 'seed04@email.com.br', password: 'user_pass_hash04' },
+        { email: 'seed05@email.com.br', password: 'user_pass_hash05' },
     ];
 
     try {
@@ -56,7 +56,7 @@ import { createConnection } from 'mysql2/promise';
         }
 
         await cnn.commit();
-        console.log( "🌱 Seed succefuly" );
+        console.log( '🌱 Seed succefuly' );
     } catch ( err ) {
         await cnn.rollback();
         const typedError = err as Error;
