@@ -21,75 +21,25 @@
 
     <div class="container">
         <main>
-            <div class="event">
-                <div class="events-info-container">
-                    <p class="title">titulo do evento</p>
-                    <span class="date-event">2025-07-03</span>
-                    <div class="buttons-container">
-                        <button>x</button>
-                        <button>ok</button>
-                    </div>
-                </div>
-            </div>
-            <aside class="users-email-list">
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-                <p>email@email</p>
-            </aside>
+                <form class="event-create" method="post">
+                    <label for="title-create">Titulo: </label>
+                    <input type="text" name="title" id="title" placeholder="agendar viagem!">
+                    <label for="title-create">Data: </label>
+                    <input type="date" name="date" id="date">
+                    <button type="submit" name="button">+</button>
+                </form>
         </main>
+        <aside class="users-email-list">
+            <span>
+                USERS:
+            </span>
+        </aside>
+
     </div>
 
     <script type="module" src="../scripts/nav.js"></script>
-    <script type="module" src="../scripts/registerSuccess.js"></script>
+    <script type="module" src="../scripts/getUsers.js"></script>
+    <script type="module" src="../scripts/renewToken.js"></script>
 </body>
 
 </html>

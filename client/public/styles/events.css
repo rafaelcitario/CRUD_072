@@ -12,18 +12,57 @@ body {
     flex: 1;
     display: flex;
     justify-content: left;
-    align-items: center;
-    padding: 2rem;
+    align-items: self-start;
+    padding: 2rem 2rem 2rem 2rem;
     height: 100%;
+}
+
+.event-create {
+    width: 100%;
+    height: 10rem;
+    padding: 1rem 10rem 1rem 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+}
+.event-create input:first-of-type{
+    flex: 1;
+}
+.event-create input{
+    display: flex;
+    line-height: 1.2rem;
+    border-radius: .2rem;
+    border: none;
+    padding: .876rem;
+    box-sizing: border-box;
+}
+
+.event-create button {
+    line-height: 2rem;
+    width: 3.12rem;
+    border-radius: .3rem;
+    border: none;
+    box-shadow: .1rem .1rem .05rem black;
+    background-color: rgb(60, 172, 60);
+    color: white;
+    font-weight: bolder;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.event-create button:hover{
+   background-color: rgb(95, 207, 95);
 }
 
 main {
     display: flex;
-    max-width: 100%;
+    flex-direction: column;
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    gap: .1rem;
 }
 
 .event {
@@ -34,7 +73,6 @@ main {
     height: fit-content;
     align-items: flex-start;
     padding: 2rem;
-    gap: .1rem;
 }
 
 .events-info-container {
@@ -44,7 +82,6 @@ main {
     width: 90%;
     flex-direction: column;
     align-content: center;
-    margin-bottom: .5rem;
     border-radius: 0.2rem;
     box-shadow: 0 0 1rem #0000001a;
     gap: .1rem;
@@ -101,7 +138,7 @@ header {
 }
 
 .users-email-list {
-  width: 20vw;
+  width: 50vw;
   height: 100vmin;
   border-radius: 0.3rem;
   padding: 3rem 1rem;
@@ -113,8 +150,13 @@ header {
   gap: .672rem;
 }
 
+.users-email-list span {
+    font-weight: 900;
+}
+
 .users-email-list p {
     width: 100%;
     height: 1rem;
     display: block;
+    font-size: .8rem;
 }
