@@ -47,7 +47,8 @@ form.addEventListener("submit", async (event) => {
         }
 
         window.localStorage.setItem('verification_link', data.tokens.verificationLink);
-        window.localStorage.setItem('TaJ', data.tokens.token);
+        window.sessionStorage.setItem('actk', data.tokens.token);
+        window.localStorage.setItem('rftk', data.tokens.refresh_token);
         redirect('public/pages/verify_email.html')
 
     } catch (error) {

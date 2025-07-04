@@ -26,23 +26,25 @@ form.addEventListener("submit", async (event) => {
         });
 
         if (!response.ok) {
-            throw new Error("Falha na requisição: " + response.status);
+            throw new Error(response.status);
         }
 
         const data = await response.json();
         if (!data) {
-            console.log("Resposta da API:", data);
+            console.log("Error: ", data);
         }
 
-        window.localStorage.setItem('TaJ', data.tokens.token);
+        window.sessionStorage.setItem('actk', data.tokens.token);
+        window.localStorage.setItem('rftk', data.tokens.refresh_token)
         window.localStorage.removeItem('email');
         window.localStorage.removeItem('verification_link');
-        window.location.href = '../pages/events.html'
+       setTimeout(() => {
+         window.location.href = '../pages/events.html'
+       }, 1000);
 
 
 
     } catch (error) {
-        console.error("Erro ao fazer login:", error);
         loginErr.classList.replace('error-disable', 'error-enable')
         loginErr.textContent = 'Erro ao tentar fazer login, por favor verifique seus dados e tente novamente.'
     }
