@@ -1,7 +1,6 @@
 import { databaseConnection } from 'src/database';
 import { generateBinaryID } from 'src/util/generate_binaryId';
 import { ResultSetHeader } from 'mysql2/promise';
-import { implementJWTToken } from 'src/util/tokens/createToken.jwt';
 
 interface User extends ResultSetHeader {
     id: Uint8Array,
