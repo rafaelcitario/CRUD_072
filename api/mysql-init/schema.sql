@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS tokens (
   id BINARY(16) PRIMARY KEY,
   user_id BINARY(16) NOT NULL,
   token VARCHAR(255) NOT NULL,
-  type ENUM('email_confirmation', 'password_reset') NOT NULL,
+  type ENUM('email_confirmation', 'password_reset', 'refresh_token') NOT NULL,
   is_used BOOLEAN DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   expires_at DATETIME NOT NULL,

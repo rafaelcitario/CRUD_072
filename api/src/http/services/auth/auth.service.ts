@@ -36,8 +36,7 @@ export class AuthServices {
         const token = implementJWTToken( { userId: stringify( user.id as Buffer ), email: user.email }, 'token' );
         const refresh_token = implementJWTToken( { userId: stringify( user.id as Buffer ), email: user.email }, 'rf_token' );
         return { token, refresh_token };
-    };
-
+    }
     static async register ( data: { email: string; password: string; } ): Promise<{ verificationLink: string; } & JWTReturnTokens> {
         const { email, password } = data;
         if ( !isValidEmail( email ) || !isValidPassword( password ) ) {
@@ -72,5 +71,15 @@ export class AuthServices {
         }
         await AuthRepository.validateEmailAccount( { userId, email } );
         return;
+    }
+    static async renewertoken ( data: { email: string; userId: string; } ) {
+        const { email, userId } = data;
+        if ( !userId || !email ) {
+            throw new Error( 'Invalid token' );
+        }
+        const token = await implementJWTToken( { email, userId }, 'token' );
+        const rf_token = await implementJWTToken( { email, userId }, 'rf_token' );
+        await AuthRepository.renew( { userId, token } );
+        return { refresh_token: rf_token };
     }
 }

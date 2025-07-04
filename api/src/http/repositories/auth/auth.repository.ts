@@ -1,6 +1,7 @@
 import { databaseConnection } from 'src/database';
 import { generateBinaryID } from 'src/util/generate_binaryId';
 import { ResultSetHeader } from 'mysql2/promise';
+import { implementJWTToken } from 'src/util/tokens/createToken.jwt';
 
 interface User extends ResultSetHeader {
     id: Uint8Array,
@@ -8,6 +9,7 @@ interface User extends ResultSetHeader {
     is_valid_email: number;
 }
 export class AuthRepository {
+
     static async userLogin ( data: { email: string; password: string; } ): Promise<User[] | []> {
         const { email, password } = data;
         const database = await databaseConnection();
@@ -68,6 +70,26 @@ export class AuthRepository {
             WHERE id = UNHEX(?) AND email = (?)
             `;
             await database.query<User[]>( sql, [userId.replaceAll( '-', '' ), email] );
+            await database.commit();
+            return;
+        } catch ( e ) {
+            await database.rollback();
+            throw new Error( `Error: ${e instanceof Error ? e.message : 'undefined Error at database connection'}` );
+        } finally {
+            await database.end();
+        }
+    }
+
+    static async renew ( data: { userId: string, token: string; } ) {
+        const { userId, token } = data;
+        const database = await databaseConnection();
+        try {
+            await database.beginTransaction();
+            const sql = `
+                INSERT INTO tokens (user_id, token, type, is_used)
+                VALUES (UNHEX(?), ?, ?, ?)
+            `;
+            await database.query<User[]>( sql, [userId.replaceAll( '-', '' ), token, 'refresh_token', 1] );
             await database.commit();
             return;
         } catch ( e ) {

@@ -49,4 +49,20 @@ export class AuthController {
             return;
         }
     }
+
+    static async renewerToken ( req: Request, res: Response ) {
+        const { email, userId } = req.user;
+        try {
+            const tokens = await AuthServices.renewertoken( { email, userId } );
+            const code = 200;
+            res.status( code ).json( { code, status: 'Renew token successfuly', tokens } );
+        } catch ( e ) {
+            if ( e instanceof Error && e.message === 'Invalid token' ) {
+                res.status( 400 ).json( { error: 'Invalid token or expired' } );
+                return;
+            }
+            res.status( 500 ).json( { error: 'Internal server error' } );
+            return;
+        }
+    }
 }
