@@ -1,6 +1,7 @@
 import { databaseConnection } from 'src/database';
 import { generateBinaryID } from 'src/util/generate_binaryId';
 import { ResultSetHeader } from 'mysql2/promise';
+import { _env } from 'src/env';
 
 interface User extends ResultSetHeader {
     id: Uint8Array,
@@ -79,23 +80,40 @@ export class AuthRepository {
         }
     }
 
-    static async renew ( data: { userId: string, token: string; } ) {
-        const { userId, token } = data;
+    static async renew ( data: { userId: string; rf_token: string; } ) {
+        const { userId, rf_token } = data;
         const database = await databaseConnection();
+
         try {
             await database.beginTransaction();
+
             const sql = `
-                INSERT INTO tokens (user_id, token, type, is_used)
-                VALUES (UNHEX(?), ?, ?, ?)
-            `;
-            await database.query<User[]>( sql, [userId.replaceAll( '-', '' ), token, 'refresh_token', 1] );
+      INSERT INTO tokens
+      (id, user_id, token, type, is_used, expires_at)
+      VALUES (?, UNHEX(?), ?, ?, ?, ?)
+    `;
+
+            const expiresAt = new Date( Date.now() + Number( _env.JWT_LIFETIME_RF_TOKEN ) * 1000 );
+            const id = generateBinaryID();
+            await database.query( sql, [
+                id,
+                userId.replaceAll( '-', '' ),
+                rf_token,
+                'refresh_token',
+                1,
+                expiresAt,
+            ] );
+
             await database.commit();
             return;
         } catch ( e ) {
             await database.rollback();
-            throw new Error( `Error: ${e instanceof Error ? e.message : 'undefined Error at database connection'}` );
+            console.log( e );
+            throw new Error(
+                `Error: ${e instanceof Error ? e.message : 'undefined Error at database connection'}`
+            );
         } finally {
             await database.end();
         }
     }
-}
+};

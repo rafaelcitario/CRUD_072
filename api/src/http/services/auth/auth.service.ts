@@ -79,7 +79,7 @@ export class AuthServices {
         }
         const token = await implementJWTToken( { email, userId }, 'token' );
         const rf_token = await implementJWTToken( { email, userId }, 'rf_token' );
-        await AuthRepository.renew( { userId, token } );
-        return { refresh_token: rf_token };
+        await AuthRepository.renew( { userId, rf_token } );
+        return { token, refresh_token: rf_token };
     }
 }
