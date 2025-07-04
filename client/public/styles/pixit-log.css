@@ -1,0 +1,24 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    box-sizing: border-box;
+    align-content: center;
+}
+
+.pixit-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: inline-block;
+    animation: reveal 5s ease-in-out both ;
+}
+
+@keyframes reveal {
+    from {
+        filter: blur(0rem);
+    }
+
+    to {
+        filter: blur(1rem);
+    }
+}

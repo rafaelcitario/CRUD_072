@@ -1,0 +1,24 @@
+h1 {
+    font-weight: 900;
+}
+
+h2 {
+    font-size: 1rem;
+    text-align: center;
+}
+
+span {
+    font-weight: 800;
+}
+
+.pixit-warn {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: .6rem;
+    width: fit-content;
+    height: fit-content;
+    border-bottom: 1px solid black;
+}
